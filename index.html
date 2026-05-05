@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Resume Screening | Recruiter Dashboard</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/animations.css">
+</head>
+<body>
+    <!-- Splash Screen Preloader -->
+    <div id="splash-screen">
+        <div class="splash-content">
+            <i class="ph ph-file-pdf splash-icon"></i>
+            <h2>ScreenAI</h2>
+            <div class="splash-loader">
+                <div class="splash-bar"></div>
+            </div>
+            <p id="splash-text">Connecting to servers...</p>
+        </div>
+    </div>
+
+    <div id="app">
+        <!-- Dashboard Wrapper -->
+        <div class="dashboard-wrapper">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <i class="ph ph-briefcase logo-icon"></i>
+                    <span class="logo-text">ScreenAI</span>
+                </div>
+                
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item active">
+                        <i class="ph ph-squares-four"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="ph ph-users"></i>
+                        <span>Candidates</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="ph ph-file-text"></i>
+                        <span>Jobs</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="ph ph-chart-line-up"></i>
+                        <span>Analytics</span>
+                    </a>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <div class="recruiter-profile">
+                        <div class="avatar">AK</div>
+                        <div class="profile-info">
+                            <span class="profile-name">Alex Recruiter</span>
+                            <span class="profile-role">HR Manager</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- Main Content Area -->
+            <main class="main-content">
+                <!-- Top Navigation -->
+                <header class="top-nav">
+                    <div class="page-title">
+                        <h1>Overview</h1>
+                    </div>
+                    <div class="nav-actions">
+                        <div class="search-bar">
+                            <i class="ph ph-magnifying-glass"></i>
+                            <input type="text" placeholder="Search candidates or jobs...">
+                        </div>
+                        <button class="action-btn icon-btn"><i class="ph ph-bell"></i></button>
+                        <button class="action-btn primary-btn" id="upload-resume-btn">
+                            <i class="ph ph-upload-simple"></i> Upload Resume
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Dashboard Content -->
+                <div class="content-scrollable" id="main-view">
+                    <!-- Hero / Analytics Summary -->
+                    <section class="dashboard-hero">
+                        <div class="hero-text">
+                            <h2>Smarter Hiring Powered by AI</h2>
+                            <p>Seamlessly parse resumes, match skills, and rank candidates instantly.</p>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="stat-card">
+                                <span class="stat-label">Screened Today</span>
+                                <span class="stat-value">24</span>
+                                <i class="ph ph-file-magnifying-glass stat-icon"></i>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Shortlisted</span>
+                                <span class="stat-value">5</span>
+                                <i class="ph ph-check-circle stat-icon" style="color: var(--text-green)"></i>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Active Jobs</span>
+                                <span class="stat-value">3</span>
+                                <i class="ph ph-briefcase stat-icon" style="color: var(--text-blue)"></i>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Upload Section -->
+                    <section class="upload-section card">
+                        <div class="upload-header">
+                            <h3>Screen New Candidates</h3>
+                            <p>Upload a resume to instantly match against active jobs.</p>
+                        </div>
+                        <div class="drop-zone" id="drop-zone">
+                            <i class="ph ph-upload-simple drop-icon"></i>
+                            <h4>Drag and drop resume here</h4>
+                            <p>or click to browse a file (PDF, DOCX)</p>
+                            <input type="file" id="file-input" style="display: none;" accept=".pdf,.doc,.docx">
+                        </div>
+                        
+                        <!-- AI Processing Panel (Hidden) -->
+                        <div class="ai-processing-panel" id="ai-panel" style="display: none;">
+                            <div class="processing-content">
+                                <div class="processing-text">
+                                    <h4 id="ai-status-text">Initializing AI Engine...</h4>
+                                    <p id="ai-sub-text">Preparing to scan document</p>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar" id="ai-progress-bar"></div>
+                                </div>
+                            </div>
+                            <div class="processing-steps">
+                                <div class="step" id="step-1">
+                                    <i class="ph ph-circle"></i>
+                                    <span>Parsing Document</span>
+                                </div>
+                                <div class="step" id="step-2">
+                                    <i class="ph ph-circle"></i>
+                                    <span>Extracting Skills</span>
+                                </div>
+                                <div class="step" id="step-3">
+                                    <i class="ph ph-circle"></i>
+                                    <span>Matching Jobs</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Candidates List Section -->
+                    <section class="candidates-section">
+                        <div class="section-header">
+                            <h3>Recent Candidates</h3>
+                            <div class="filters">
+                                <button class="secondary-btn"><i class="ph ph-faders"></i> Filter</button>
+                                <button class="secondary-btn"><i class="ph ph-sort-ascending"></i> Sort</button>
+                            </div>
+                        </div>
+                        <div class="table-container card">
+                            <table class="candidates-table">
+                                <thead>
+                                    <tr>
+                                        <th>Candidate Info</th>
+                                        <th>Applied Role</th>
+                                        <th>Match Score</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="candidates-tbody">
+                                    <!-- Dynamic Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+
+        <!-- Candidate Detail Modal -->
+        <div class="modal-overlay" id="candidate-modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-candidate-info">
+                        <div class="avatar lg-avatar" id="modal-avatar">--</div>
+                        <div>
+                            <h2 id="modal-name">---</h2>
+                            <p id="modal-role">---</p>
+                        </div>
+                    </div>
+                    <button class="icon-btn" onclick="closeModal()"><i class="ph ph-x"></i></button>
+                </div>
+                
+                <div class="modal-body">
+                    <!-- Match Score Section -->
+                    <div class="match-score-section">
+                        <div class="score-circle-container">
+                            <svg class="score-ring" width="120" height="120">
+                                <circle class="score-ring-bg" cx="60" cy="60" r="50"></circle>
+                                <circle class="score-ring-progress" id="modal-score-ring" cx="60" cy="60" r="50"></circle>
+                            </svg>
+                            <div class="score-text">
+                                <h3 id="modal-score-text">0%</h3>
+                                <span>Match</span>
+                            </div>
+                        </div>
+                        <div class="score-details">
+                            <h4>Fit Analysis</h4>
+                            <p>Strong technical fit based on extracted resume skills matched against job description parameters.</p>
+                            <div class="tags-container" id="matched-skills">
+                                <!-- populated by js -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Gap Section -->
+                    <div class="skill-gap-section">
+                        <h4>Skill Gap Analysis</h4>
+                        <div class="missing-skills-list tags-container" id="missing-skills">
+                            <!-- populated by js -->
+                        </div>
+                    </div>
+
+                    <!-- Recruiter Notes -->
+                    <div class="recruiter-notes">
+                        <h4>AI Interview Recommendation</h4>
+                        <div class="ai-recommendation-box">
+                            <i class="ph ph-sparkle"></i>
+                            <p id="ai-recommendation-text">Based on matching text, focus on evaluating missing competencies during the technical round.</p>
+                        </div>
+                    </div>
+
+                    <!-- AI Resume Correction Section -->
+                    <div class="ai-correction-section">
+                        <div class="correction-header">
+                            <h4>AI Resume Corrections</h4>
+                            <button class="secondary-btn" id="run-correction-btn" onclick="runAiCorrection()"><i class="ph ph-magic-wand"></i> Identify & Fix Mistakes</button>
+                        </div>
+                        <div class="correction-results" id="correction-results" style="display: none;">
+                            <div class="correction-loader" id="correction-loader">
+                                <i class="ph ph-spinner-gap"></i> Scanning document for structural and grammatical errors...
+                            </div>
+                            <div class="correction-list" id="correction-list" style="display: none;">
+                                <!-- Sample updates inserted via JS later -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="secondary-btn" onclick="closeModal()">Close</button>
+                    <button class="primary-btn">Move to Next Stage</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/mockData.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
